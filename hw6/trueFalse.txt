@@ -1,0 +1,8 @@
+1 F there is a worse case scenario where all pairs have to be compared
+2 F the growth cannot be bounded by log(n) in all scenarios
+3 F the growth can be faster than N
+4 T the upper bound is N comparisons
+5 F since N^2 is slower than N, it can also be the upper bound of put
+6 T Josh mentioned natural logs in lecture
+7 F depends on the implementation of containsKey, and the location of c and k within map
+8 O(N^2) for the else return case, it is possible to go through N nodes, and numberofNodes has a runtime of N

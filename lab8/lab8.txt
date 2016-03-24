@@ -1,0 +1,117 @@
+1. Estimated running times (in big-theta notation):
+function1: Theta(N^2)
+function2: Theta(N)
+function3: Theta(N^3)
+
+Data:
+               n         time
+function1:    1000		0.012
+ 			  10000		0.244
+			  100000	24.541
+			  200000	93.16
+
+function2:    200000	0.011
+			  1000000	0.017
+			 100000000	0.702
+			1000000000	6.807  	
+
+
+function3:		50		0.016
+				100		0.017
+				1000	7.258
+				2000	60.836	
+
+
+
+Experimentally determined running time, assuming runtime is of the form ~aN^b:
+
+function1: ~0.019N^1.3245
+function2: ~1.177N^0.9866
+function3: ~1.5x10-7N^3.067
+
+2. Data:
+                              n             time
+function4:				982451653			0.003
+						1000000000000037    0.314
+						100000000000000013	3.443
+						100000000000000019	3.595
+						
+
+
+
+function5 (best case): 	982451653				0.002
+						1000000000000037		0.327
+						100000000000000013		3.684
+						100000000000000019		3.537
+					   
+					   
+function5 (worst case): 	100000			0.011
+							10000000		0.067
+							20000000		0.144
+							100000000		0.664
+								
+							
+
+
+
+3. Data:
+                              n         time
+ArrayList:					10000		0.086
+							100000		7.07
+							200000		29.22
+							400000		180.346
+							
+Approximatemy N^(2.6257)
+
+
+HashSet:					10000		0.034
+							100000		0.06
+							1000000		0.834
+							10000000	20.266
+							
+
+
+
+
+
+Experimentally determined running time:
+
+ArrayList: N^(2.6257)
+HashSet: N^(1.385)
+
+
+4. Data:
+                                       n         time
+Insertion sort with array list: 	  100		0.002
+									 1000		0.016
+									 10000		0.073
+									 100000		6.955
+
+
+
+Insertion sort with linked list:     10			0.0
+									 100		0.004
+									 1000		0.342
+									 10000		474.875
+
+
+
+
+Experimentally determined running time:
+
+Insertion sort with array:        O(N^2)
+Insertion sort with linked list:  O(N^3)
+
+5. Initial guess: O(nlogN)
+
+Data:             n               time
+			   100000			0.008
+			   1000000			0.213
+			   10000000			7.13
+			   100000000		229.779
+
+
+
+Experimentally determined running time: O(N^1.5)
+
+

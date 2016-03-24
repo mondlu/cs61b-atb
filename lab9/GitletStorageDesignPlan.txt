@@ -1,0 +1,117 @@
+Basic Storage Design Plan for Gitlet
+
+
+Overview
+-------
+
+.gitlet/commitHistory.ser: stores the previous history of commits (objects that ave information on time, mappings to files, and comments)
+
+.gitlet/staged.ser: stores the files that have been added, but not committed
+
+.gitlet/markedForRemoval.ser: stores the unique hashcodes for the files that have been marked for removal
+
+.gitlet/copiesOfFiles: file that stores copies of files
+
+
+
+
+Sequential Example
+-------
+
+For each of the commands below, describe in detail what files on your computer change after the command is executed. Only list changes made to files. Do not list details regarding the reading of files.
+
+$ java Gitlet init
+
+ . If it does not already exist, a new folder called .gitlet is created in the current directory.
+ 
+ . Create the gitlet/commitHistory.ser file, add the initial commit (with no associated files, and "inital commit" comment) to the commitHistory.ser file
+ 
+
+$ java Gitlet add dog.txt
+
+ . create and add dog.txt's unique hashcode, and other meta-data, to the staged.ser file, unless there is a previous version of dog.txt in the copiesOfFiles.ser folder that is unmodified (the same as) the one you are trying to commit
+
+
+$ java Gitlet commit “initial commit of dog.txt”
+
+ . add a copy of the staged dog.txt to copiesOfFiles as dog-1.txt
+ 
+ . add the commit (meta-data about the files just committed) to commitHistory.ser
+ 
+ . empty the staged.ser file
+
+
+$ java Gitlet add dog.txt
+ 
+  . there is no change bcause modifications have not been made to dog.txt, and it will therefore not be staged
+
+
+
+$ cp manyDogs.txt dog.txt
+$ java Gitlet add dog.txt
+
+ . generate and add the latest dog.txt's new unique hashcode to staged.ser 
+
+
+
+$ java Gitlet commit “replaced dog.txt with manyDogs”
+
+ . add a copy of the modified dog.txt to copiesOfFile, do not overwrite any previous versions, name the copy dog-2.txt
+ 
+ . add the commit that maps which files were modified/staged to commitHistory.ser using identifying hashcodes
+ 
+ . empty the staged.ser file
+
+
+
+$ java Gitlet add manyDogs.txt
+ 
+ . generate a unique hashcode for the modified manyDogs
+ 
+ . add manyDogs.txt's unique hashcode to staged.ser file
+
+
+
+$ java Gitlet add ketchupFriend.txt
+
+ . generate and add ketchupFriend.txt's unique hashcode to staged.ser  
+
+
+
+$ java Gitlet commit “added manyDogs and ketchupFriend”
+
+ . add the copies of manyDogs and ketchupFriend to copiesOfFile as manyDogs-1.txt and ketchupFriend-1.txt respectively
+ 
+ . add the commit that maps the commit time and the hashcodes of the committed files to the commitHistory.ser file
+ 
+ . clear the staged.ser file
+
+
+
+$ java Gitlet commit YOLO
+
+ . nothing happens because staged.ser is empty
+
+
+
+$ cp doge.txt manyDogs.txt
+$ java Gitlet add manyDogs.txt
+
+ . the hashcode and associated meta-data for the new, modified version of manyDogs is added to staged.ser
+
+
+$ java Gitlet commit “replaced manyDogs with doge”
+
+ . a copy of the new, modified version of manyDogs is added to copiesOfFiles, without overwriting previous versions, name it manyDogs-2.txt
+ 
+ . the staged commit is added to the commitHistory.ser file, which maps the commit to the associated version of manyDogs
+
+
+
+$ java Gitlet add dog.txt
+ 
+ . nothing occurs because dog.txt has not been modified
+
+$ java Gitlet commit “added dog yet again”
+
+ . nothing can be committed because staged.ser is empty

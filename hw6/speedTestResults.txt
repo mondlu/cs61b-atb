@@ -1,0 +1,48 @@
+Insert Random Speed Test
+L = 20
+Data:		n: 			time:
+ULLMap	   100			0.01 sec
+           1000			0.01 sec
+		   10000		0.5 sec
+		   20000		2.31 sec		
+		   
+
+
+BSTMap	   100			0.01 sec
+		   1000			0.03 sec
+		   10000		0.1 sec
+		   40000		0.56 sec
+
+
+TreeMap	   100			0.0 sec
+		   1000			0.0 sec
+		   10000		0.01 sec
+		   1000000		2.1 sec
+		   
+
+
+Insert In Order Speed
+L = 10
+Data:		n:		time:
+ULLMap		100		0.01 sec
+			1000	0.03 sec
+			10000	0.81 sec
+			20000	11.45 sec	
+			
+
+
+BSTMap		100		0.03 sec
+			1000	0.38 sec
+			2000	12.75 sec
+			4000	50.12 sec	
+
+TreeMap		100		0.0 sec
+			1000	0.01 sec
+			10000	0.16 sec
+			100000	0.69 sec
+			
+			
+
+The speed tests indicate that BSTMaps are faster than ULLMaps for random inserts,
+but not for ordered inserts. This is because inserting in order causes an 
+right-imbalanced tree.

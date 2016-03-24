@@ -1,0 +1,3 @@
+The Integer class does not check for an equivalence of values, but rather whether or not the 
+object references are the same. It appears that once there are 128 objects, the reference numbers 
+start changing so that numbers with the same apparent value are actually different objects 

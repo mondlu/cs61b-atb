@@ -1,0 +1,83 @@
+#!/bin/bash
+#
+# Set61BEnv     Bash script that was quickly thrown together (and then revised)
+#               to automate setting of environment variables for CS61B Spring
+#               2015.
+#
+# Dependencies: Assumes that user has pulled from skeleton and supplies the
+#               correct path to the script.  Script ensures path exists and that
+#               path ends in '/lib'
+#
+# Author:       Nick Fong
+#               University of California, Berkeley
+#
+# Bugs:         cs61b[at]nicholas-fong[dot]com
+#
+# Revisions:    2015-01-28  - Check for spaces in path (thanks to Alex Beraut for
+#                             providing the edge case to discover and test)
+#                           - echo --> err in else case
+#                           - Added logic to grep for CLASSPATH in dotfiles so
+#                             PATH not added multiple times
+#                           - /skeleton/lib --> /lib
+#                           - Script now uses current working directory ($WD) to
+#                             determine path
+################################################################################
+
+PROG=$(basename $0)
+
+usage() {
+    echo "Usage: $PROG"
+}
+
+err() {
+    echo "$@" 1>&2;
+}
+
+WD=$(pwd)
+
+# Check number of arguments
+if [ "$#" -ne 0 ]; then
+    err "Incorrect number of arguments"
+    usage && exit 1
+fi
+
+# Check for spaces in the path.  Javac doesn't like it if the path has spaces
+if [[ "$WD" =~ \ + ]]; then
+    err "Path "$WD" includes spaces.  This script doesn't like spaces."
+    err "Furthermore, javac won't work with spaces.  Please replace spaces in"
+    err "your directory structure with underscores (or do something to get rid"
+    err "of the spaces)" && exit 1
+
+# Check to see if the path already exists in ~/.bashrc
+elif grep -Fq "$WD" ~/.bashrc; then
+    echo "It looks like "$WD" is already in your ~/.bashrc"
+    echo "This means that either you've run this script already,"
+    echo "or that you've added the path to your ~/.bashrc manually"
+    echo "already.  For the latter case, this doesn't necessarily mean that"
+    echo "everything is set up properly, so you can either delete the lines"
+    echo "you added and run this script again, or leave your ~/.bashrc as-is"
+    echo "and test to see if javac still works per the lab spec and Piazza"
+    echo "post @471." && exit 0
+
+# Check that the path matches */lib regex
+elif [[ "$WD" =~ \/lib\/?$ ]]; then
+    echo "export CS61B_LAB_DIR=$WD/*" >> ~/.bash_profile
+    echo "export CLASSPATH="$CLASSPATH":"$WD":./" >> ~/.bash_profile
+    # Too lazy to use tee
+    echo "export CS61B_LAB_DIR=$WD/*" >> ~/.bashrc
+    echo "export CLASSPATH="$CLASSPATH":"$WD":./" >> ~/.bashrc
+
+# Bad path, error and exit
+else
+    err "Error: You're not in the /lib directory.  You're in $WD instead.  "
+    usage && exit 1
+fi
+
+# Source dotfiles, exit
+source ~/.bash_profile
+source ~/.bashrc
+echo "CS61B_LAB_DIR is now: $CS61B_LAB_DIR and CLASSPATH is now: $CLASSPATH"
+echo
+echo "If this does not look right (e.g. '::./' without quotes), please"
+echo "consult a friend or post on Piazza, in that order."
+
