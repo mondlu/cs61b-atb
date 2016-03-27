@@ -119,12 +119,12 @@ public class Gitlet implements Serializable {
         }
         gitlet.mkdir();
         String gitletPath = ".gitlet/";
-        //make the sub files and folder of gitlet
+        //make the sub files and folders of gitlet
         // (1) commitHistory stores a Commit object
         // (2) branchHeads is a hash map: branch name --> commit
         // (3) staged stores a HashSet<String> of file paths that have been staged
         // (4) markedForRemoval stores a HashSet<String> of file paths that are marked for removal
-        // (5) copiesOfFiles is a directory stores the files and subfolder that contains files
+        // (5) copiesOfFiles is a directory that stores the files and subfolder that contains files
         // (6) totalCommits is a Integer that gives the total number of commits; count starts from 0,
         //      initially set at -1
         // (7) currentBranch stores a string that indicates the current branch
@@ -856,7 +856,7 @@ public class Gitlet implements Serializable {
         //find the commit right after the split in the current branch
         Commit afterSplit = findProceeding(splitCommit, pointer);
         
-        //loop to rebase working forward from the pointer
+        //loop to rebase, working forward from the pointer
         forwardAppend(afterSplit, givenBranchHead, splitCommit, pointer.getCommitNumber(), givenBranch);
 		
 		branchHeads.put(currentBranch, allTheCommitsEverMade.get(totalCommits));
@@ -1154,7 +1154,7 @@ public class Gitlet implements Serializable {
         return returnSet;
     }
     
-    //helper funtion to given the unique files in a set of file versions
+    //helper funtion to give the unique files in a set of file versions
     private static HashSet<String> uniqueFiles(HashSet<String> set) {
         HashSet<String> returnSet = new HashSet<String>();
         for (String s : set) {
